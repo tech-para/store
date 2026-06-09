@@ -1,120 +1,188 @@
 <html>
+
 <head>
-<title>テクパラ | ニッチなサポート商品の提供</title>
-<style>
-    tr{
-        border: 1px solid #ccc;
-    }
-table{
-    border: 1px solid #ccc;
-    border-collapse: collapse;
-    width: 950px;
-    background:#fff;
-    text-align: center;
-}
-table.product-list th,
-table.producdt-list td{
-    border: 1px solid #ccc;
-    padding: 10px 25px;
-}
-table.product-list th{
-    background: #f5f5f5;
-    font-weight:bold;
-    color: #333;
-    position: sticky;
-    top:0;
-    z-index:1;
-    padding: 3px 5px;
-}
-td.item_column2{
-    text-align: left;
-}
-a{
-    text-decoration: none;
-}
-h2{
-    font-size:1.6rem;
-    font-weight:600;
-    border-bottom: 2px solid #ddd;
-    padding-bottom: 0.3em;
-    margin-top:2em;
-    margin-bottom: 1em;
-}
+    <title>テクパラ | ニッチなサポート商品の提供</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-.item_column_desc{
-    width:500px;
-}
-.item_column_purchase{
-    width:180px;
-}
+    <style>
+        body {
+            margin: 0;
+            padding: 0 10px;
+            font-family: sans-serif;
+            background: #fafafa;
+        }
 
-</style>
+        header {
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .site-logo {
+            max-width: 200px;
+            height: auto;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 0.3em;
+            margin-top: 2em;
+            margin-bottom: 1em;
+        }
+
+        table {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 950px;
+            margin: auto;
+            background: #fff;
+            text-align: center;
+        }
+
+        table.product-list th,
+        table.product-list td {
+            border: 1px solid #ccc;
+            padding: 10px 15px;
+        }
+
+        table.product-list th {
+            background: #f5f5f5;
+            font-weight: bold;
+            color: #333;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        td.item_column2 {
+            text-align: left;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* -------------------------
+           スマホ向けレスポンシブ対応
+        -------------------------- */
+        @media (max-width: 768px) {
+
+            table,
+            thead,
+            tbody,
+            th,
+            td,
+            tr {
+                display: block;
+            }
+
+            table.product-list tr {
+                margin-bottom: 15px;
+                border: 1px solid #ddd;
+                padding: 10px;
+                background: #fff;
+            }
+
+            table.product-list th {
+                display: none;
+            }
+
+            table.product-list td {
+                border: none;
+                text-align: left;
+                padding: 5px 0;
+            }
+
+            table.product-list td::before {
+                content: attr(data-label);
+                font-weight: bold;
+                display: block;
+                margin-bottom: 3px;
+                color: #555;
+            }
+        }
+    </style>
 </head>
+
 <body>
-<header>
-  <a href="/">
-    <img src="images/TechparaLogo.png" alt="サイト名のロゴ" class="site-logo">
-  </a>
-</header>
+    <header>
+        <a href="/">
+            <img src="images/TechparaLogo.png" alt="サイト名のロゴ" class="site-logo">
+        </a>
+    </header>
+
+    <p>テクパラは、試作やテストのときに使うかもしれないニッチなサポート商品を提供するオンラインショップです。</p>
 
     <h2>SMD-DIP化基板</h2>
     <p>ブレッドボードを使用した試作が可能です。</p>
-<table class="product-list">
-    <tr>
-        <th>タイプ</th>
-        <th>ピン数</th>
-        <th>ピッチ</th>
-        <th class="item_column_desc">概要</th>
-        <th class="item_column_purchase">購入リンク(BASE)</th>
-    </tr>
-    <tr>
-        <td rowspan="4">QFP</td>
-        <td rowspan="2">32</td>
-        <td>0.5</td>
-        <td style="text-align: left;">QFP32 0.5mm</td>
-        <td><a href="https://techpara.theshop.jp/items/96621403">⇒</a></td>
-    </tr>
-    <tr>
-        <td>0.8</td>
-        <td style="text-align: left;">QFP32 0.8mm</td>
-        <td><a href="https://techpara.theshop.jp/items/106850159">⇒</a></td>
-    </tr>
-    <tr>
-        <td>48</td>
-        <td>0.5</td>
-        <td style="text-align: left;">QFP48 0.5mm</td>
-        <td><a href="https://techpara.theshop.jp/items/96621378">⇒</a></td>
-    </tr>
-    <tr>
-        <td>64</td>
-        <td>0.5</td>
-        <td style="text-align: left;">QFP64 0.5mm</td>
-        <td><a href="https://techpara.theshop.jp/items/76130035">⇒</a></td>
-    </tr>
-    <tr>
-        <td>SSOP</td>
-        <td>20</td>
-        <td>0.5</td>
-        <td style="text-align: left;">SSOP 20 0.5mm</td>
-        <td><a href="https://techpara.theshop.jp/items/96621425">⇒</a></td>
-    </tr>
 
-</table>
-<br>
-<h2>その他変換基板</h2>
-<table class="product-list">
-    <tr>
-        <th>名称</th>
-        <th class="item_column_desc">概要</th>
-        <th class="item_column_purchase">購入リンク(BASE)</th>
-    </tr>
-    <tr>
-        <td>1.27-2.54 2x10ピン変換基板</td>
-        <td>ピンピッチ1.27mmと2.54mmの2x10ピンヘッダもしくはピンソケットを相互に変換できます</td>
-        <td><a href="https://techpara.theshop.jp/items/106850392">⇒</a></td>
-    </tr>
-</table>
+    <table class="product-list">
+        <thead>
+            <tr>
+                <th>タイプ</th>
+                <th>ピン数</th>
+                <th>ピッチ</th>
+                <th class="item_column_desc">概要</th>
+                <th class="item_column_purchase">購入リンク(BASE)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td data-label="タイプ" rowspan="4">QFP</td>
+                <td data-label="ピン数" rowspan="2">32</td>
+                <td data-label="ピッチ">0.5</td>
+                <td data-label="概要">QFP32 0.5mm</td>
+                <td data-label="購入"><a href="https://techpara.theshop.jp/items/96621403">⇒</a></td>
+            </tr>
+            <tr>
+                <td data-label="ピッチ">0.8</td>
+                <td data-label="概要">QFP32 0.8mm</td>
+                <td data-label="購入"><a href="https://techpara.theshop.jp/items/106850159">⇒</a></td>
+            </tr>
+            <tr>
+                <td data-label="ピン数">48</td>
+                <td data-label="ピッチ">0.5</td>
+                <td data-label="概要">QFP48 0.5mm</td>
+                <td data-label="購入"><a href="https://techpara.theshop.jp/items/96621378">⇒</a></td>
+            </tr>
+            <tr>
+                <td data-label="ピン数">64</td>
+                <td data-label="ピッチ">0.5</td>
+                <td data-label="概要">QFP64 0.5mm</td>
+                <td data-label="購入"><a href="https://techpara.theshop.jp/items/76130035">⇒</a></td>
+            </tr>
 
+            <tr>
+                <td data-label="タイプ">SSOP</td>
+                <td data-label="ピン数">20</td>
+                <td data-label="ピッチ">0.5</td>
+                <td data-label="概要">SSOP 20 0.5mm</td>
+                <td data-label="購入"><a href="https://techpara.theshop.jp/items/96621425">⇒</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>その他変換基板</h2>
+
+    <table class="product-list">
+        <thead>
+            <tr>
+                <th>名称</th>
+                <th class="item_column_desc">概要</th>
+                <th class="item_column_purchase">購入リンク(BASE)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td data-label="名称">1.27-2.54 2x10ピン変換基板</td>
+                <td data-label="概要">ピンピッチ1.27mmと2.54mmの2x10ピンヘッダもしくはピンソケットを相互に変換できます</td>
+                <td data-label="購入"><a href="https://techpara.theshop.jp/items/106850392">⇒</a></td>
+            </tr>
+        </tbody>
+    </table>
 
 </body>
+
 </html>
