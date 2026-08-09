@@ -13,8 +13,10 @@
 
     <meta name="robots" content="index, follow">
 
-    <!-- 実際の独自ドメインに変更してください -->
-    <link rel="canonical" href="https://あなたのドメイン.example/">
+    <meta name="color-scheme" content="light dark">
+
+    <!-- 独自ドメイン -->
+    <link rel="canonical" href="https://tech-para.net/">
 
     <!-- OGP -->
     <meta property="og:type" content="website">
@@ -23,27 +25,104 @@
     <meta property="og:title" content="テクパラ | 電子工作向け変換基板">
     <meta property="og:description"
         content="SMD-DIP変換基板やピンピッチ変換基板など、電子工作の試作を支援する製品を提供しています。">
-    <meta property="og:url" content="https://あなたのドメイン.example/">
+    <meta property="og:url" content="https://tech-para.net/">
     <meta property="og:image"
-        content="https://あなたのドメイン.example/images/techpara-ogp.png">
+        content="https://tech-para.net/images/techpara-ogp.png">
 
     <!-- X -->
     <meta name="twitter:card" content="summary_large_image">
 
-    <link rel="icon" href="images/favicon.ico">
+    <!-- favicon -->
+    <link
+        rel="icon"
+        href="images/favicon.png"
+        media="(prefers-color-scheme: light)">
+
+    <link
+        rel="icon"
+        href="images/favicon-dark.png"
+        media="(prefers-color-scheme: dark)">
 
     <style>
         :root {
+            color-scheme: light dark;
+
             --color-primary: #1769aa;
-            --color-primary-dark: #0d4777;
+            --color-primary-hover: #0d4777;
+            --color-accent: #00bfe8;
+
             --color-text: #263238;
             --color-muted: #607d8b;
-            --color-border: #dce3e7;
+
             --color-background: #f7f9fa;
             --color-surface: #ffffff;
+            --color-surface-alt: #eef3f5;
+
+            --color-border: #dce3e7;
+
+            --color-header-bg: rgba(255, 255, 255, 0.96);
+
+            --color-hero-start: rgba(23, 105, 170, 0.10);
+            --color-hero-end: rgba(255, 255, 255, 0.82);
+
+            --color-label-bg: #e5f2fb;
+            --color-label-text: #0d4777;
+
+            --color-meta-bg: #edf2f4;
+            --color-meta-text: #455a64;
+
+            --color-button-secondary-bg: #ffffff;
+            --color-button-secondary-hover: #edf6fc;
+
+            --color-footer-bg: #17242c;
+            --color-footer-text: #d7e1e7;
+
+            --shadow:
+                0 8px 24px rgba(30, 55, 70, 0.08);
+
             --content-width: 1100px;
             --border-radius: 12px;
-            --shadow: 0 8px 24px rgba(30, 55, 70, 0.08);
+        }
+
+        /* ==============================
+           ダークモード
+           ============================== */
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-primary: #35b9ff;
+                --color-primary-hover: #69ceff;
+                --color-accent: #00d5ff;
+
+                --color-text: #edf5f8;
+                --color-muted: #aabcc6;
+
+                --color-background: #0e171d;
+                --color-surface: #16232b;
+                --color-surface-alt: #1c2c35;
+
+                --color-border: #2c414c;
+
+                --color-header-bg: rgba(14, 23, 29, 0.96);
+
+                --color-hero-start: rgba(0, 149, 224, 0.20);
+                --color-hero-end: rgba(14, 23, 29, 0.90);
+
+                --color-label-bg: #15394c;
+                --color-label-text: #70d6ff;
+
+                --color-meta-bg: #233741;
+                --color-meta-text: #c1d1d9;
+
+                --color-button-secondary-bg: #16232b;
+                --color-button-secondary-hover: #203743;
+
+                --color-footer-bg: #080e12;
+                --color-footer-text: #b9c8cf;
+
+                --shadow:
+                    0 10px 28px rgba(0, 0, 0, 0.30);
+            }
         }
 
         * {
@@ -56,8 +135,10 @@
 
         body {
             margin: 0;
+
             color: var(--color-text);
             background: var(--color-background);
+
             font-family:
                 -apple-system,
                 BlinkMacSystemFont,
@@ -67,7 +148,12 @@
                 "Yu Gothic",
                 Meiryo,
                 sans-serif;
+
             line-height: 1.7;
+
+            transition:
+                background-color 0.25s,
+                color 0.25s;
         }
 
         img {
@@ -85,40 +171,62 @@
         }
 
         .container {
-            width: min(calc(100% - 32px), var(--content-width));
+            width: min(
+                calc(100% - 32px),
+                var(--content-width)
+            );
+
             margin: 0 auto;
         }
 
-        /* ヘッダー */
+        /* ==============================
+           ヘッダー
+           ============================== */
 
         .site-header {
             position: sticky;
             top: 0;
             z-index: 100;
-            border-bottom: 1px solid var(--color-border);
-            background: rgba(255, 255, 255, 0.96);
+
+            border-bottom:
+                1px solid var(--color-border);
+
+            background:
+                var(--color-header-bg);
+
             backdrop-filter: blur(8px);
+
+            transition:
+                background-color 0.25s,
+                border-color 0.25s;
         }
 
         .header-inner {
             min-height: 72px;
+
             display: flex;
             align-items: center;
             justify-content: space-between;
+
             gap: 24px;
         }
 
         .site-logo {
             display: block;
-            width: 180px;
+
+            width: 210px;
+            height: auto;
         }
 
         .global-nav ul {
             display: flex;
             align-items: center;
+
             gap: 24px;
+
             margin: 0;
             padding: 0;
+
             list-style: none;
         }
 
@@ -132,15 +240,18 @@
             text-decoration: none;
         }
 
-        /* ヒーロー */
+        /* ==============================
+           ヒーロー
+           ============================== */
 
         .hero {
             padding: 88px 0;
+
             background:
                 linear-gradient(
                     135deg,
-                    rgba(23, 105, 170, 0.10),
-                    rgba(255, 255, 255, 0.8)
+                    var(--color-hero-start),
+                    var(--color-hero-end)
                 );
         }
 
@@ -150,50 +261,73 @@
 
         .hero-label {
             display: inline-block;
+
             margin: 0 0 16px;
             padding: 5px 12px;
+
             border-radius: 999px;
-            color: var(--color-primary-dark);
-            background: #e5f2fb;
+
+            color: var(--color-label-text);
+            background: var(--color-label-bg);
+
             font-size: 0.9rem;
             font-weight: 700;
         }
 
         .hero h1 {
             margin: 0;
-            font-size: clamp(2rem, 5vw, 3.5rem);
+
+            font-size:
+                clamp(2rem, 5vw, 3.5rem);
+
             line-height: 1.3;
             letter-spacing: 0.02em;
         }
 
         .hero-description {
             max-width: 700px;
+
             margin: 24px 0 0;
+
             color: var(--color-muted);
+
             font-size: 1.1rem;
         }
 
         .hero-actions {
             display: flex;
             flex-wrap: wrap;
+
             gap: 12px;
+
             margin-top: 32px;
         }
 
-        /* ボタン */
+        /* ==============================
+           ボタン
+           ============================== */
 
         .button {
             display: inline-flex;
+
             min-height: 48px;
+
             align-items: center;
             justify-content: center;
+
             padding: 10px 22px;
-            border: 2px solid var(--color-primary);
+
+            border:
+                2px solid var(--color-primary);
+
             border-radius: 8px;
+
             font-weight: 700;
+
             transition:
-                background 0.2s,
+                background-color 0.2s,
                 color 0.2s,
+                border-color 0.2s,
                 transform 0.2s;
         }
 
@@ -203,26 +337,35 @@
         }
 
         .button-primary {
-            color: #fff;
+            color: #ffffff;
             background: var(--color-primary);
         }
 
         .button-primary:hover {
-            color: #fff;
-            background: var(--color-primary-dark);
-            border-color: var(--color-primary-dark);
+            color: #ffffff;
+
+            background:
+                var(--color-primary-hover);
+
+            border-color:
+                var(--color-primary-hover);
         }
 
         .button-secondary {
             color: var(--color-primary);
-            background: #fff;
+
+            background:
+                var(--color-button-secondary-bg);
         }
 
         .button-secondary:hover {
-            background: #edf6fc;
+            background:
+                var(--color-button-secondary-hover);
         }
 
-        /* 共通セクション */
+        /* ==============================
+           共通セクション
+           ============================== */
 
         .section {
             padding: 72px 0;
@@ -238,122 +381,205 @@
 
         .section-heading h2 {
             margin: 0;
-            font-size: clamp(1.7rem, 3vw, 2.3rem);
+
+            font-size:
+                clamp(1.7rem, 3vw, 2.3rem);
+
             line-height: 1.4;
         }
 
         .section-heading p {
             max-width: 720px;
+
             margin: 12px 0 0;
+
             color: var(--color-muted);
         }
 
-        /* カテゴリ */
+        /* ==============================
+           カテゴリ
+           ============================== */
 
         .category-grid {
             display: grid;
-            grid-template-columns: minmax(0, 700px);
+
+            grid-template-columns:
+                minmax(0, 700px);
+
             justify-content: center;
+
             gap: 24px;
         }
 
         .category-card {
             padding: 32px;
-            border: 1px solid var(--color-border);
-            border-radius: var(--border-radius);
-            background: var(--color-surface);
-            box-shadow: var(--shadow);
+
+            border:
+                1px solid var(--color-border);
+
+            border-radius:
+                var(--border-radius);
+
+            background:
+                var(--color-surface);
+
+            box-shadow:
+                var(--shadow);
+
+            transition:
+                transform 0.2s,
+                border-color 0.2s;
+        }
+
+        .category-card:hover {
+            transform: translateY(-2px);
+
+            border-color:
+                var(--color-primary);
         }
 
         .category-card h3 {
             margin: 0;
+
             font-size: 1.45rem;
         }
 
         .category-card p {
             margin: 12px 0 24px;
+
             color: var(--color-muted);
         }
 
         .category-label {
             display: inline-block;
+
             margin-bottom: 12px;
+
             color: var(--color-primary);
+
             font-size: 0.85rem;
             font-weight: 700;
+
             letter-spacing: 0.08em;
         }
 
-        /* 商品カード */
+        /* ==============================
+           商品カード
+           ============================== */
 
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
+
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+
             gap: 24px;
         }
 
         .product-card {
             display: flex;
             flex-direction: column;
+
             overflow: hidden;
-            border: 1px solid var(--color-border);
-            border-radius: var(--border-radius);
-            background: var(--color-surface);
-            box-shadow: var(--shadow);
+
+            border:
+                1px solid var(--color-border);
+
+            border-radius:
+                var(--border-radius);
+
+            background:
+                var(--color-surface);
+
+            box-shadow:
+                var(--shadow);
+
+            transition:
+                transform 0.2s,
+                border-color 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-3px);
+
+            border-color:
+                var(--color-primary);
         }
 
         .product-image {
             display: flex;
+
             min-height: 190px;
+
             align-items: center;
             justify-content: center;
+
             padding: 24px;
-            background: #eef3f5;
+
+            background:
+                var(--color-surface-alt);
         }
 
         .product-image img {
             max-height: 170px;
             object-fit: contain;
+
+            border-radius: 6px;
         }
 
         .product-body {
             display: flex;
+
             flex: 1;
             flex-direction: column;
+
             padding: 24px;
         }
 
         .product-type {
             margin: 0 0 8px;
+
             color: var(--color-primary);
+
             font-size: 0.85rem;
             font-weight: 700;
         }
 
         .product-card h3 {
             margin: 0;
+
             font-size: 1.25rem;
             line-height: 1.45;
         }
 
         .product-description {
             flex: 1;
+
             margin: 12px 0 20px;
+
             color: var(--color-muted);
         }
 
         .product-meta {
             display: flex;
             flex-wrap: wrap;
+
             gap: 6px;
+
             margin-bottom: 20px;
         }
 
         .product-meta span {
             padding: 3px 9px;
+
             border-radius: 999px;
-            background: #edf2f4;
-            color: #455a64;
+
+            background:
+                var(--color-meta-bg);
+
+            color:
+                var(--color-meta-text);
+
             font-size: 0.8rem;
         }
 
@@ -361,41 +587,59 @@
             font-weight: 700;
         }
 
-        /* 特徴 */
+        /* ==============================
+           特徴
+           ============================== */
 
         .feature-grid {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
+
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+
             gap: 24px;
         }
 
         .feature-item {
             padding: 24px;
-            border-left: 4px solid var(--color-primary);
-            background: var(--color-surface);
+
+            border-left:
+                4px solid var(--color-primary);
+
+            background:
+                var(--color-surface);
         }
 
         .feature-item h3 {
             margin: 0 0 8px;
+
             font-size: 1.1rem;
         }
 
         .feature-item p {
             margin: 0;
+
             color: var(--color-muted);
         }
 
-        /* フッター */
+        /* ==============================
+           フッター
+           ============================== */
 
         .site-footer {
             padding: 48px 0;
-            color: #d7e1e7;
-            background: #17242c;
+
+            color:
+                var(--color-footer-text);
+
+            background:
+                var(--color-footer-bg);
         }
 
         .footer-inner {
             display: flex;
             justify-content: space-between;
+
             gap: 32px;
         }
 
@@ -404,7 +648,7 @@
         }
 
         .footer-brand strong {
-            color: #fff;
+            color: #ffffff;
             font-size: 1.2rem;
         }
 
@@ -415,6 +659,7 @@
         .footer-links {
             margin: 0;
             padding: 0;
+
             list-style: none;
         }
 
@@ -423,31 +668,49 @@
         }
 
         .footer-links a {
-            color: #fff;
+            color: #ffffff;
         }
 
         .copyright {
             margin: 32px 0 0;
             padding-top: 24px;
-            border-top: 1px solid rgba(255, 255, 255, 0.15);
+
+            border-top:
+                1px solid rgba(255, 255, 255, 0.15);
+
             font-size: 0.9rem;
         }
 
-        /* レスポンシブ */
+        /* ==============================
+           タブレット
+           ============================== */
 
         @media (max-width: 900px) {
+
             .product-grid,
             .feature-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
             }
         }
 
+        /* ==============================
+           スマートフォン
+           ============================== */
+
         @media (max-width: 700px) {
+
             .header-inner {
                 min-height: auto;
+
                 align-items: flex-start;
                 flex-direction: column;
+
                 padding: 14px 0;
+            }
+
+            .site-logo {
+                width: 180px;
             }
 
             .global-nav {
@@ -457,7 +720,9 @@
 
             .global-nav ul {
                 width: max-content;
+
                 gap: 18px;
+
                 padding-bottom: 4px;
             }
 
@@ -487,7 +752,12 @@
             }
         }
 
+        /* ==============================
+           アニメーション抑制設定
+           ============================== */
+
         @media (prefers-reduced-motion: reduce) {
+
             html {
                 scroll-behavior: auto;
             }
@@ -500,15 +770,15 @@
         }
     </style>
 
-    <!-- 組織情報の構造化データ -->
+    <!-- 構造化データ -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "Organization",
         "name": "テクパラ",
-        "url": "https://あなたのドメイン.example/",
-        "logo": "https://あなたのドメイン.example/images/TechparaLogo.png",
-        "description": "電子工作の試作を支援するSMD-DIP変換基板やピンピッチ変換基板を提供するブランドです。",
+        "url": "https://tech-para.net/",
+        "logo": "https://tech-para.net/images/TechparaLogo.png",
+        "description": "電子工作や技術開発を支援する製品を提供するブランドです。",
         "sameAs": [
             "https://techpara.theshop.jp/"
         ]
@@ -528,63 +798,117 @@
         }
 
         gtag("js", new Date());
-        gtag("config", "G-J61765V26P");
+
+        gtag(
+            "config",
+            "G-J61765V26P"
+        );
     </script>
 </head>
 
 <body>
 
+    <!-- ==============================
+         ヘッダー
+         ============================== -->
+
     <header class="site-header">
+
         <div class="container header-inner">
 
-            <a href="/" aria-label="テクパラ トップページ">
-                <img
-                    src="images/TechparaLogo.png"
-                    alt="テクパラ"
-                    class="site-logo">
+            <a
+                href="/"
+                aria-label="テクパラ トップページ">
+
+                <picture>
+
+                    <!-- ダークモード用 -->
+                    <source
+                        srcset="images/TechparaLogo-dark.png"
+                        media="(prefers-color-scheme: dark)">
+
+                    <!-- ライトモード用 -->
+                    <img
+                        src="images/TechparaLogo.png"
+                        alt="テクパラ"
+                        class="site-logo">
+
+                </picture>
+
             </a>
 
-            <nav class="global-nav" aria-label="メインメニュー">
+            <nav
+                class="global-nav"
+                aria-label="メインメニュー">
+
                 <ul>
-                    <li><a href="#hardware">変換基板</a></li>
-                    <li><a href="#about">テクパラについて</a></li>
+
+                    <li>
+                        <a href="#hardware">
+                            変換基板
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#about">
+                            テクパラについて
+                        </a>
+                    </li>
+
                     <li>
                         <a
                             href="https://techpara.theshop.jp/"
                             target="_blank"
                             rel="noopener noreferrer">
+
                             BASEショップ
+
                         </a>
                     </li>
+
                 </ul>
+
             </nav>
 
         </div>
+
     </header>
 
     <main>
 
+        <!-- ==============================
+             ヒーロー
+             ============================== -->
+
         <section class="hero">
+
             <div class="container hero-inner">
 
                 <p class="hero-label">
-                    ELECTRONICS SUPPORT PRODUCTS
+                    TECHNOLOGY SUPPORT PRODUCTS
                 </p>
 
                 <h1>
-                    電子工作の小さな不便を、<br>
-                    便利な基板で解決する。
+                    技術の小さな不便を、<br>
+                    アイデアで解決する。
                 </h1>
 
                 <p class="hero-description">
-                    テクパラは、表面実装部品をブレッドボードで使用するための
-                    SMD-DIP変換基板や、異なるピンピッチを接続する
-                    変換基板を提供しています。
+
+                    テクパラは、電子工作や技術開発の現場で生じる
+                    小さな不便に着目し、試作や開発を支援する
+                    製品やツールを提供します。
+
                 </p>
 
                 <div class="hero-actions">
-                    <a href="#hardware" class="button button-primary">
+
+                    <a
+                        href="#hardware"
+                        class="button button-primary">
+
                         変換基板を見る
+
                     </a>
 
                     <a
@@ -592,83 +916,140 @@
                         class="button button-secondary"
                         target="_blank"
                         rel="noopener noreferrer">
+
                         BASEショップを見る
+
                     </a>
+
                 </div>
 
             </div>
+
         </section>
 
+        <!-- ==============================
+             製品カテゴリ
+             ============================== -->
+
         <section class="section section-white">
+
             <div class="container">
 
                 <div class="section-heading">
-                    <h2>製品カテゴリ</h2>
+
+                    <h2>
+                        製品カテゴリ
+                    </h2>
+
                     <p>
-                        電子工作の試作やテストを支援する、
-                        小型の変換基板を取り扱っています。
+                        技術開発や試作を支援する製品を
+                        少しずつ展開しています。
                     </p>
+
                 </div>
 
                 <div class="category-grid">
 
                     <article class="category-card">
-                        <span class="category-label">HARDWARE</span>
 
-                        <h3>電子工作向け変換基板</h3>
+                        <span class="category-label">
+                            HARDWARE
+                        </span>
+
+                        <h3>
+                            電子工作向け変換基板
+                        </h3>
 
                         <p>
-                            表面実装部品をブレッドボードで使用するための
-                            SMD-DIP変換基板や、異なるピンピッチを接続する
+
+                            表面実装部品をブレッドボードで
+                            使用するためのSMD-DIP変換基板や、
+                            異なるピンピッチを接続する
                             変換基板を販売しています。
+
                         </p>
 
-                        <a href="#hardware" class="product-link">
+                        <a
+                            href="#hardware"
+                            class="product-link">
+
                             変換基板の一覧を見る →
+
                         </a>
+
                     </article>
 
                 </div>
 
             </div>
+
         </section>
 
-        <section id="hardware" class="section">
+        <!-- ==============================
+             変換基板
+             ============================== -->
+
+        <section
+            id="hardware"
+            class="section">
+
             <div class="container">
 
                 <div class="section-heading">
-                    <h2>電子工作向け変換基板</h2>
+
+                    <h2>
+                        電子工作向け変換基板
+                    </h2>
 
                     <p>
-                        表面実装部品の試作や、異なるピンピッチ間の接続に
+
+                        表面実装部品の試作や、
+                        異なるピンピッチ間の接続に
                         使用できる小型変換基板です。
+
                     </p>
+
                 </div>
 
                 <div class="product-grid">
 
+                    <!-- QFP32 0.5 -->
+
                     <article class="product-card">
+
                         <div class="product-image">
+
                             <img
                                 src="images/qfp32-05.jpg"
                                 alt="QFP32ピン 0.5mmピッチ DIP変換基板"
                                 loading="lazy">
+
                         </div>
 
                         <div class="product-body">
-                            <p class="product-type">SMD-DIP変換基板</p>
 
-                            <h3>QFP32 0.5mmピッチ変換基板</h3>
+                            <p class="product-type">
+                                SMD-DIP変換基板
+                            </p>
+
+                            <h3>
+                                QFP32 0.5mmピッチ変換基板
+                            </h3>
 
                             <p class="product-description">
-                                32ピン、0.5mmピッチのQFP部品を
-                                2.54mmピッチへ変換できます。
+
+                                32ピン、0.5mmピッチの
+                                QFP部品を2.54mmピッチへ
+                                変換できます。
+
                             </p>
 
                             <div class="product-meta">
+
                                 <span>QFP</span>
                                 <span>32ピン</span>
                                 <span>0.5mm</span>
+
                             </div>
 
                             <a
@@ -676,33 +1057,52 @@
                                 class="product-link"
                                 target="_blank"
                                 rel="noopener noreferrer">
+
                                 BASEで購入する →
+
                             </a>
+
                         </div>
+
                     </article>
 
+                    <!-- QFP32 0.8 -->
+
                     <article class="product-card">
+
                         <div class="product-image">
+
                             <img
                                 src="images/qfp32-08.jpg"
                                 alt="QFP32ピン 0.8mmピッチ DIP変換基板"
                                 loading="lazy">
+
                         </div>
 
                         <div class="product-body">
-                            <p class="product-type">SMD-DIP変換基板</p>
 
-                            <h3>QFP32 0.8mmピッチ変換基板</h3>
+                            <p class="product-type">
+                                SMD-DIP変換基板
+                            </p>
+
+                            <h3>
+                                QFP32 0.8mmピッチ変換基板
+                            </h3>
 
                             <p class="product-description">
-                                32ピン、0.8mmピッチのQFP部品を
-                                ブレッドボードなどで扱いやすい形に変換します。
+
+                                32ピン、0.8mmピッチの
+                                QFP部品をブレッドボードなどで
+                                扱いやすい形に変換します。
+
                             </p>
 
                             <div class="product-meta">
+
                                 <span>QFP</span>
                                 <span>32ピン</span>
                                 <span>0.8mm</span>
+
                             </div>
 
                             <a
@@ -710,33 +1110,52 @@
                                 class="product-link"
                                 target="_blank"
                                 rel="noopener noreferrer">
+
                                 BASEで購入する →
+
                             </a>
+
                         </div>
+
                     </article>
 
+                    <!-- QFP48 -->
+
                     <article class="product-card">
+
                         <div class="product-image">
+
                             <img
                                 src="images/qfp48-05.jpg"
                                 alt="QFP48ピン 0.5mmピッチ DIP変換基板"
                                 loading="lazy">
+
                         </div>
 
                         <div class="product-body">
-                            <p class="product-type">SMD-DIP変換基板</p>
 
-                            <h3>QFP48 0.5mmピッチ変換基板</h3>
+                            <p class="product-type">
+                                SMD-DIP変換基板
+                            </p>
+
+                            <h3>
+                                QFP48 0.5mmピッチ変換基板
+                            </h3>
 
                             <p class="product-description">
-                                48ピン、0.5mmピッチのQFP部品を
-                                2.54mmピッチへ変換します。
+
+                                48ピン、0.5mmピッチの
+                                QFP部品を2.54mmピッチへ
+                                変換します。
+
                             </p>
 
                             <div class="product-meta">
+
                                 <span>QFP</span>
                                 <span>48ピン</span>
                                 <span>0.5mm</span>
+
                             </div>
 
                             <a
@@ -744,33 +1163,52 @@
                                 class="product-link"
                                 target="_blank"
                                 rel="noopener noreferrer">
+
                                 BASEで購入する →
+
                             </a>
+
                         </div>
+
                     </article>
 
+                    <!-- QFP64 -->
+
                     <article class="product-card">
+
                         <div class="product-image">
+
                             <img
                                 src="images/qfp64-05.jpg"
                                 alt="QFP64ピン 0.5mmピッチ DIP変換基板"
                                 loading="lazy">
+
                         </div>
 
                         <div class="product-body">
-                            <p class="product-type">SMD-DIP変換基板</p>
 
-                            <h3>QFP64 0.5mmピッチ変換基板</h3>
+                            <p class="product-type">
+                                SMD-DIP変換基板
+                            </p>
+
+                            <h3>
+                                QFP64 0.5mmピッチ変換基板
+                            </h3>
 
                             <p class="product-description">
-                                64ピン、0.5mmピッチのQFP部品を
-                                試作環境で使用しやすくする変換基板です。
+
+                                64ピン、0.5mmピッチの
+                                QFP部品を試作環境で
+                                使用しやすくする変換基板です。
+
                             </p>
 
                             <div class="product-meta">
+
                                 <span>QFP</span>
                                 <span>64ピン</span>
                                 <span>0.5mm</span>
+
                             </div>
 
                             <a
@@ -778,33 +1216,52 @@
                                 class="product-link"
                                 target="_blank"
                                 rel="noopener noreferrer">
+
                                 BASEで購入する →
+
                             </a>
+
                         </div>
+
                     </article>
 
+                    <!-- SSOP20 -->
+
                     <article class="product-card">
+
                         <div class="product-image">
+
                             <img
                                 src="images/ssop20-05.jpg"
                                 alt="SSOP20ピン 0.5mmピッチ DIP変換基板"
                                 loading="lazy">
+
                         </div>
 
                         <div class="product-body">
-                            <p class="product-type">SMD-DIP変換基板</p>
 
-                            <h3>SSOP20 0.5mmピッチ変換基板</h3>
+                            <p class="product-type">
+                                SMD-DIP変換基板
+                            </p>
+
+                            <h3>
+                                SSOP20 0.5mmピッチ変換基板
+                            </h3>
 
                             <p class="product-description">
-                                20ピン、0.5mmピッチのSSOP部品を
-                                2.54mmピッチへ変換できます。
+
+                                20ピン、0.5mmピッチの
+                                SSOP部品を2.54mmピッチへ
+                                変換できます。
+
                             </p>
 
                             <div class="product-meta">
+
                                 <span>SSOP</span>
                                 <span>20ピン</span>
                                 <span>0.5mm</span>
+
                             </div>
 
                             <a
@@ -812,34 +1269,52 @@
                                 class="product-link"
                                 target="_blank"
                                 rel="noopener noreferrer">
+
                                 BASEで購入する →
+
                             </a>
+
                         </div>
+
                     </article>
 
+                    <!-- 1.27mm - 2.54mm -->
+
                     <article class="product-card">
+
                         <div class="product-image">
+
                             <img
                                 src="images/127-254-2x10.jpg"
                                 alt="1.27mmと2.54mm 2列10ピン変換基板"
                                 loading="lazy">
+
                         </div>
 
                         <div class="product-body">
-                            <p class="product-type">ピンピッチ変換基板</p>
 
-                            <h3>1.27–2.54mm 2×10ピン変換基板</h3>
+                            <p class="product-type">
+                                ピンピッチ変換基板
+                            </p>
+
+                            <h3>
+                                1.27–2.54mm 2×10ピン変換基板
+                            </h3>
 
                             <p class="product-description">
+
                                 1.27mmピッチと2.54mmピッチの
                                 2列10ピンヘッダまたはピンソケットを
                                 相互に変換できます。
+
                             </p>
 
                             <div class="product-meta">
+
                                 <span>2×10ピン</span>
                                 <span>1.27mm</span>
                                 <span>2.54mm</span>
+
                             </div>
 
                             <a
@@ -847,107 +1322,183 @@
                                 class="product-link"
                                 target="_blank"
                                 rel="noopener noreferrer">
+
                                 BASEで購入する →
+
                             </a>
+
                         </div>
+
                     </article>
 
                 </div>
 
             </div>
+
         </section>
 
-        <section id="about" class="section section-white">
+        <!-- ==============================
+             テクパラについて
+             ============================== -->
+
+        <section
+            id="about"
+            class="section section-white">
+
             <div class="container">
 
                 <div class="section-heading">
-                    <h2>テクパラについて</h2>
+
+                    <h2>
+                        テクパラについて
+                    </h2>
 
                     <p>
-                        電子工作や試作の現場で生じる小さな不便に着目し、
-                        必要な機能を絞った扱いやすい製品を提供します。
+
+                        技術開発や試作の現場で生じる
+                        小さな不便に着目し、
+                        必要な機能を絞った扱いやすい
+                        製品やツールを提供します。
+
                     </p>
+
                 </div>
 
                 <div class="feature-grid">
 
                     <article class="feature-item">
-                        <h3>試作時の課題から開発</h3>
+
+                        <h3>
+                            現場の課題から開発
+                        </h3>
 
                         <p>
-                            ブレッドボードを使った試作や、
-                            表面実装部品の評価で生じる不便を出発点に
-                            製品を検討しています。
+
+                            電子工作、試作、設計など、
+                            実際の技術作業で感じる不便を
+                            出発点として製品を検討します。
+
                         </p>
+
                     </article>
 
                     <article class="feature-item">
-                        <h3>必要な機能に限定</h3>
+
+                        <h3>
+                            必要な機能に限定
+                        </h3>
 
                         <p>
-                            目的を明確にし、電子工作や試作で
-                            扱いやすいシンプルな製品を目指します。
+
+                            目的を明確にし、
+                            扱いやすくシンプルな
+                            製品やツールを目指します。
+
                         </p>
+
                     </article>
 
                     <article class="feature-item">
-                        <h3>少量の試作にも対応</h3>
+
+                        <h3>
+                            幅広い技術分野へ
+                        </h3>
 
                         <p>
-                            個人の電子工作や、小規模な試作・評価にも
-                            導入しやすい製品を提供します。
+
+                            電子工作だけでなく、
+                            機械設計やソフトウェアなど、
+                            技術開発を支援する分野へ
+                            展開していきます。
+
                         </p>
+
                     </article>
 
                 </div>
 
             </div>
+
         </section>
 
     </main>
 
+    <!-- ==============================
+         フッター
+         ============================== -->
+
     <footer class="site-footer">
+
         <div class="container">
 
             <div class="footer-inner">
 
                 <div class="footer-brand">
-                    <strong>テクパラ</strong>
+
+                    <strong>
+                        テクパラ
+                    </strong>
 
                     <p>
-                        電子工作の試作を支援する
-                        SMD-DIP変換基板やピンピッチ変換基板を
-                        提供しています。
+
+                        電子・機械・ソフトウェアなど、
+                        技術開発や試作を支援する
+                        製品・ツールを提供します。
+
                     </p>
+
                 </div>
 
                 <ul class="footer-links">
-                    <li><a href="#hardware">変換基板</a></li>
+
+                    <li>
+                        <a href="#hardware">
+                            変換基板
+                        </a>
+                    </li>
 
                     <li>
                         <a
                             href="https://techpara.theshop.jp/"
                             target="_blank"
                             rel="noopener noreferrer">
+
                             BASEショップ
+
                         </a>
                     </li>
-<!---
-                    <li><a href="privacy.html">プライバシーポリシー</a></li>
 
-                    <li><a href="contact.html">お問い合わせ</a></li>
-                --->
+                    <!--
+
+                    <li>
+                        <a href="privacy.html">
+                            プライバシーポリシー
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="contact.html">
+                            お問い合わせ
+                        </a>
+                    </li>
+
+                    -->
+
                 </ul>
 
             </div>
 
             <p class="copyright">
+
                 <small>
-                    &copy; 2026 Techpara. All rights reserved.
+                    &copy; 2026 Techpara.
+                    All rights reserved.
                 </small>
+
             </p>
 
         </div>
+
     </footer>
 
 </body>
