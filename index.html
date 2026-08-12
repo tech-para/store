@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>テクパラ | 電子工作向けSMD-DIP変換基板</title>
+    <title>テクパラ | 技術開発を支援するハードウェア・ソフトウェア</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <meta name="description"
-        content="テクパラは、表面実装部品をブレッドボードで使用するためのSMD-DIP変換基板や、ピンピッチ変換基板を提供しています。">
+        content="テクパラは、電子工作向け変換基板やPDF検図支援アプリDracherなど、技術開発や設計作業を支援する製品・ツールを提供しています。">
 
     <meta name="robots" content="index, follow">
 
@@ -22,9 +22,9 @@
     <meta property="og:type" content="website">
     <meta property="og:locale" content="ja_JP">
     <meta property="og:site_name" content="テクパラ">
-    <meta property="og:title" content="テクパラ | 電子工作向け変換基板">
+    <meta property="og:title" content="テクパラ | 技術開発を支援する製品・ツール">
     <meta property="og:description"
-        content="SMD-DIP変換基板やピンピッチ変換基板など、電子工作の試作を支援する製品を提供しています。">
+        content="電子工作向け変換基板やPDF検図支援アプリDracherなど、技術開発や設計作業を支援する製品・ツールを提供しています。">
     <meta property="og:url" content="https://tech-para.net/">
     <meta property="og:image"
         content="https://tech-para.net/images/techpara-ogp.png">
@@ -404,9 +404,7 @@
             display: grid;
 
             grid-template-columns:
-                minmax(0, 700px);
-
-            justify-content: center;
+                repeat(2, minmax(0, 1fr));
 
             gap: 24px;
         }
@@ -739,7 +737,8 @@
             }
 
             .product-grid,
-            .feature-grid {
+            .feature-grid,
+            .category-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -844,6 +843,12 @@
                 <ul>
 
                     <li>
+                        <a href="dracher.html">
+                            Windowsアプリ
+                        </a>
+                    </li>
+
+                    <li>
                         <a href="#hardware">
                             変換基板
                         </a>
@@ -904,8 +909,16 @@
                 <div class="hero-actions">
 
                     <a
-                        href="#hardware"
+                        href="dracher.html"
                         class="button button-primary">
+
+                        Dracherを見る
+
+                    </a>
+
+                    <a
+                        href="#hardware"
+                        class="button button-secondary">
 
                         変換基板を見る
 
@@ -974,6 +987,34 @@
                             class="product-link">
 
                             変換基板の一覧を見る →
+
+                        </a>
+
+                    </article>
+
+                    <article class="category-card">
+
+                        <span class="category-label">
+                            SOFTWARE
+                        </span>
+
+                        <h3>
+                            PDF検図支援アプリ Dracher
+                        </h3>
+
+                        <p>
+
+                            PDF図面を表示し、チェックマークや
+                            コメントなどを書き込みながら
+                            検図作業を進めるWindows向けアプリです。
+
+                        </p>
+
+                        <a
+                            href="dracher.html"
+                            class="product-link">
+
+                            Dracherの詳細・使い方を見る →
 
                         </a>
 
@@ -1450,6 +1491,12 @@
                 </div>
 
                 <ul class="footer-links">
+
+                    <li>
+                        <a href="dracher.html">
+                            PDF検図支援アプリ Dracher
+                        </a>
+                    </li>
 
                     <li>
                         <a href="#hardware">
