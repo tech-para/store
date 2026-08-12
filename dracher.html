@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>Dracher | PDF検図支援アプリ | テクパラ</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description"
+        content="Dracherは、PDF図面にチェックマークやコメントなどを書き込みながら検図作業を進めるWindows向けPDF検図支援アプリです。特徴、使い方、インストール方法を紹介します。">
+
+    <meta name="robots" content="index, follow">
+    <meta name="color-scheme" content="light dark">
+
+    <link rel="canonical" href="https://tech-para.net/dracher.html">
+
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:site_name" content="テクパラ">
+    <meta property="og:title" content="Dracher | PDF検図支援アプリ">
+    <meta property="og:description"
+        content="PDF図面を見ながら、チェックマークやコメントなどを追加して検図作業を進めるWindows向けアプリです。">
+    <meta property="og:url" content="https://tech-para.net/dracher.html">
+
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="icon" href="images/favicon.png" media="(prefers-color-scheme: light)">
+    <link rel="icon" href="images/favicon-dark.png" media="(prefers-color-scheme: dark)">
+
+    <style>
+        :root {
+            color-scheme: light dark;
+
+            --color-primary: #1769aa;
+            --color-primary-hover: #0d4777;
+            --color-accent: #00bfe8;
+
+            --color-text: #263238;
+            --color-muted: #607d8b;
+
+            --color-background: #f7f9fa;
+            --color-surface: #ffffff;
+            --color-surface-alt: #eef3f5;
+
+            --color-border: #dce3e7;
+            --color-header-bg: rgba(255, 255, 255, 0.96);
+
+            --color-hero-start: rgba(23, 105, 170, 0.10);
+            --color-hero-end: rgba(255, 255, 255, 0.82);
+
+            --color-label-bg: #e5f2fb;
+            --color-label-text: #0d4777;
+
+            --color-meta-bg: #edf2f4;
+            --color-meta-text: #455a64;
+
+            --color-button-secondary-bg: #ffffff;
+            --color-button-secondary-hover: #edf6fc;
+
+            --color-note-bg: #f2f7fa;
+            --color-footer-bg: #17242c;
+            --color-footer-text: #d7e1e7;
+
+            --shadow: 0 8px 24px rgba(30, 55, 70, 0.08);
+
+            --content-width: 1100px;
+            --border-radius: 12px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-primary: #35b9ff;
+                --color-primary-hover: #69ceff;
+                --color-accent: #00d5ff;
+
+                --color-text: #edf5f8;
+                --color-muted: #aabcc6;
+
+                --color-background: #0e171d;
+                --color-surface: #16232b;
+                --color-surface-alt: #1c2c35;
+
+                --color-border: #2c414c;
+                --color-header-bg: rgba(14, 23, 29, 0.96);
+
+                --color-hero-start: rgba(0, 149, 224, 0.20);
+                --color-hero-end: rgba(14, 23, 29, 0.90);
+
+                --color-label-bg: #15394c;
+                --color-label-text: #70d6ff;
+
+                --color-meta-bg: #233741;
+                --color-meta-text: #c1d1d9;
+
+                --color-button-secondary-bg: #16232b;
+                --color-button-secondary-hover: #203743;
+
+                --color-note-bg: #172832;
+                --color-footer-bg: #080e12;
+                --color-footer-text: #b9c8cf;
+
+                --shadow: 0 10px 28px rgba(0, 0, 0, 0.30);
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            color: var(--color-text);
+            background: var(--color-background);
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                "Noto Sans JP",
+                "Hiragino Kaku Gothic ProN",
+                "Yu Gothic",
+                Meiryo,
+                sans-serif;
+            line-height: 1.7;
+            transition: background-color 0.25s, color 0.25s;
+        }
+
+        a {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            width: min(calc(100% - 32px), var(--content-width));
+            margin: 0 auto;
+        }
+
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--color-border);
+            background: var(--color-header-bg);
+            backdrop-filter: blur(8px);
+        }
+
+        .header-inner {
+            min-height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .site-logo {
+            display: block;
+            width: 210px;
+            height: auto;
+        }
+
+        .global-nav ul {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .global-nav a {
+            color: var(--color-text);
+            font-weight: 600;
+        }
+
+        .global-nav a:hover {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+
+        .hero {
+            padding: 88px 0;
+            background: linear-gradient(135deg, var(--color-hero-start), var(--color-hero-end));
+        }
+
+        .hero-inner {
+            max-width: 850px;
+        }
+
+        .hero-label {
+            display: inline-block;
+            margin: 0 0 16px;
+            padding: 5px 12px;
+            border-radius: 999px;
+            color: var(--color-label-text);
+            background: var(--color-label-bg);
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        .hero h1 {
+            margin: 0;
+            font-size: clamp(2.2rem, 6vw, 4rem);
+            line-height: 1.2;
+            letter-spacing: 0.01em;
+        }
+
+        .hero-subtitle {
+            margin: 12px 0 0;
+            font-size: clamp(1.15rem, 2vw, 1.45rem);
+            font-weight: 700;
+        }
+
+        .hero-description {
+            max-width: 760px;
+            margin: 24px 0 0;
+            color: var(--color-muted);
+            font-size: 1.08rem;
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 24px;
+        }
+
+        .hero-meta span {
+            padding: 4px 10px;
+            border-radius: 999px;
+            color: var(--color-meta-text);
+            background: var(--color-meta-bg);
+            font-size: 0.85rem;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 32px;
+        }
+
+        .button {
+            display: inline-flex;
+            min-height: 48px;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 22px;
+            border: 2px solid var(--color-primary);
+            border-radius: 8px;
+            font-weight: 700;
+            transition: background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+        }
+
+        .button:hover {
+            text-decoration: none;
+            transform: translateY(-1px);
+        }
+
+        .button-primary {
+            color: #ffffff;
+            background: var(--color-primary);
+        }
+
+        .button-primary:hover {
+            color: #ffffff;
+            background: var(--color-primary-hover);
+            border-color: var(--color-primary-hover);
+        }
+
+        .button-secondary {
+            color: var(--color-primary);
+            background: var(--color-button-secondary-bg);
+        }
+
+        .button-secondary:hover {
+            background: var(--color-button-secondary-hover);
+        }
+
+        .section {
+            padding: 72px 0;
+        }
+
+        .section-white {
+            background: var(--color-surface);
+        }
+
+        .section-heading {
+            margin-bottom: 32px;
+        }
+
+        .section-heading h2 {
+            margin: 0;
+            font-size: clamp(1.7rem, 3vw, 2.3rem);
+            line-height: 1.4;
+        }
+
+        .section-heading p {
+            max-width: 760px;
+            margin: 12px 0 0;
+            color: var(--color-muted);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .feature-card {
+            padding: 28px;
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius);
+            background: var(--color-surface);
+            box-shadow: var(--shadow);
+        }
+
+        .feature-number {
+            display: inline-block;
+            margin-bottom: 12px;
+            color: var(--color-primary);
+            font-size: 0.82rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+        }
+
+        .feature-card h3 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .feature-card p {
+            margin: 10px 0 0;
+            color: var(--color-muted);
+        }
+
+        .steps {
+            display: grid;
+            gap: 16px;
+            max-width: 900px;
+        }
+
+        .step {
+            display: grid;
+            grid-template-columns: 54px minmax(0, 1fr);
+            gap: 18px;
+            align-items: start;
+            padding: 24px;
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius);
+            background: var(--color-surface);
+        }
+
+        .step-number {
+            display: flex;
+            width: 44px;
+            height: 44px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: #ffffff;
+            background: var(--color-primary);
+            font-weight: 800;
+        }
+
+        .step h3 {
+            margin: 0;
+            font-size: 1.15rem;
+        }
+
+        .step p {
+            margin: 6px 0 0;
+            color: var(--color-muted);
+        }
+
+        .note {
+            max-width: 900px;
+            margin-top: 24px;
+            padding: 20px 22px;
+            border-left: 4px solid var(--color-primary);
+            background: var(--color-note-bg);
+        }
+
+        .note strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .info-card {
+            padding: 28px;
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius);
+            background: var(--color-surface);
+        }
+
+        .info-card h3 {
+            margin: 0 0 14px;
+            font-size: 1.2rem;
+        }
+
+        .info-card ul {
+            margin: 0;
+            padding-left: 1.3em;
+        }
+
+        .info-card li + li {
+            margin-top: 6px;
+        }
+
+        .faq-list {
+            display: grid;
+            gap: 14px;
+            max-width: 900px;
+        }
+
+        details {
+            border: 1px solid var(--color-border);
+            border-radius: 10px;
+            background: var(--color-surface);
+            overflow: hidden;
+        }
+
+        summary {
+            cursor: pointer;
+            padding: 18px 20px;
+            font-weight: 700;
+        }
+
+        details p {
+            margin: 0;
+            padding: 0 20px 20px;
+            color: var(--color-muted);
+        }
+
+        .purchase-box {
+            padding: 36px;
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius);
+            background: var(--color-surface);
+            box-shadow: var(--shadow);
+        }
+
+        .purchase-box h2 {
+            margin: 0;
+            font-size: clamp(1.7rem, 3vw, 2.2rem);
+        }
+
+        .purchase-box p {
+            max-width: 760px;
+            margin: 12px 0 24px;
+            color: var(--color-muted);
+        }
+
+        .site-footer {
+            padding: 48px 0;
+            color: var(--color-footer-text);
+            background: var(--color-footer-bg);
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            gap: 32px;
+        }
+
+        .footer-brand {
+            max-width: 500px;
+        }
+
+        .footer-brand strong {
+            color: #ffffff;
+            font-size: 1.2rem;
+        }
+
+        .footer-brand p {
+            margin: 8px 0 0;
+        }
+
+        .footer-links {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .footer-links li + li {
+            margin-top: 8px;
+        }
+
+        .footer-links a {
+            color: #ffffff;
+        }
+
+        .copyright {
+            margin: 32px 0 0;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 900px) {
+            .feature-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 700px) {
+            .header-inner {
+                min-height: auto;
+                align-items: flex-start;
+                flex-direction: column;
+                padding: 14px 0;
+            }
+
+            .site-logo {
+                width: 180px;
+            }
+
+            .global-nav {
+                width: 100%;
+                overflow-x: auto;
+            }
+
+            .global-nav ul {
+                width: max-content;
+                gap: 18px;
+                padding-bottom: 4px;
+            }
+
+            .global-nav a {
+                font-size: 0.9rem;
+            }
+
+            .hero {
+                padding: 60px 0;
+            }
+
+            .section {
+                padding: 56px 0;
+            }
+
+            .feature-grid,
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .step {
+                grid-template-columns: 44px minmax(0, 1fr);
+                gap: 14px;
+                padding: 20px;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                transition: none !important;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Dracher",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Windows 10, Windows 11",
+        "description": "PDF図面にチェックマークやコメントなどを書き込みながら検図作業を進めるWindows向けPDF検図支援アプリです。",
+        "publisher": {
+            "@type": "Organization",
+            "name": "テクパラ",
+            "url": "https://tech-para.net/"
+        },
+        "url": "https://tech-para.net/dracher.html"
+    }
+    </script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-J61765V26P"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag("js", new Date());
+        gtag("config", "G-J61765V26P");
+    </script>
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="/" aria-label="テクパラ トップページ">
+                <picture>
+                    <source srcset="images/TechparaLogo-dark.png" media="(prefers-color-scheme: dark)">
+                    <img src="images/TechparaLogo.png" alt="テクパラ" class="site-logo">
+                </picture>
+            </a>
+
+            <nav class="global-nav" aria-label="メインメニュー">
+                <ul>
+                    <li><a href="#features">特徴</a></li>
+                    <li><a href="#usage">使い方</a></li>
+                    <li><a href="#install">インストール</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li>
+                        <a href="https://techpara.theshop.jp/" target="_blank" rel="noopener noreferrer">
+                            BASEショップ
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+
+        <section class="hero">
+            <div class="container hero-inner">
+                <p class="hero-label">WINDOWS APPLICATION</p>
+
+                <h1>Dracher</h1>
+
+                <p class="hero-subtitle">PDF図面の検図作業を、シンプルに。</p>
+
+                <p class="hero-description">
+                    Dracherは、PDF図面を表示しながらチェックマークやコメントなどを追加し、
+                    検図結果をPDFとして保存できるWindows向けの検図支援アプリです。
+                    機械設計などでの図面確認に必要な操作を、できるだけ分かりやすく扱えることを目指しています。
+                </p>
+
+                <div class="hero-meta">
+                    <span>Windows</span>
+                    <span>PDF検図</span>
+                    <span>複数ページPDF対応</span>
+                    <span>シンプル操作</span>
+                </div>
+
+                <div class="hero-actions">
+                    <!-- 商品公開後、このURLをDracherの商品ページURLへ差し替えてください。 -->
+                    <a
+                        href="https://techpara.theshop.jp/"
+                        class="button button-primary"
+                        target="_blank"
+                        rel="noopener noreferrer">
+                        BASEショップで購入する
+                    </a>
+
+                    <a href="#usage" class="button button-secondary">
+                        使い方を見る
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="section section-white">
+            <div class="container">
+                <div class="section-heading">
+                    <h2>主な特徴</h2>
+                    <p>
+                        PDF図面の確認と注釈作業に必要な機能を中心に構成しています。
+                    </p>
+                </div>
+
+                <div class="feature-grid">
+                    <article class="feature-card">
+                        <span class="feature-number">FEATURE 01</span>
+                        <h3>PDF図面をそのまま確認</h3>
+                        <p>
+                            PDF図面をアプリ上で表示し、ページを確認しながら検図作業を進められます。
+                            複数ページのPDFにも対応しています。
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <span class="feature-number">FEATURE 02</span>
+                        <h3>チェックマークを配置</h3>
+                        <p>
+                            確認済みの箇所などにチェックマークを配置し、検図の進捗を視覚的に残せます。
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <span class="feature-number">FEATURE 03</span>
+                        <h3>コメントを書き込み</h3>
+                        <p>
+                            図面上の任意の位置にテキストコメントを追加し、確認内容や修正指示を残せます。
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <span class="feature-number">FEATURE 04</span>
+                        <h3>フリーハンドで記入</h3>
+                        <p>
+                            図面上へフリーハンド線を書き込み、囲みや簡単な指示などを追加できます。
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <span class="feature-number">FEATURE 05</span>
+                        <h3>検図結果を別PDFへ保存</h3>
+                        <p>
+                            元のPDFを残したまま、検図内容を反映したPDFを別ファイルとして保存できます。
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <span class="feature-number">FEATURE 06</span>
+                        <h3>必要な機能に絞った構成</h3>
+                        <p>
+                            多機能なPDF編集ソフトではなく、図面確認で使う操作を中心にしたシンプルなツールです。
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="usage" class="section">
+            <div class="container">
+                <div class="section-heading">
+                    <h2>基本的な使い方</h2>
+                    <p>
+                        基本操作は、PDFを開く、注釈を追加する、保存する、という流れです。
+                    </p>
+                </div>
+
+                <div class="steps">
+                    <article class="step">
+                        <div class="step-number">1</div>
+                        <div>
+                            <h3>検図するPDFを開く</h3>
+                            <p>
+                                Dracherで検図対象のPDFファイルを開きます。
+                                複数のPDFを扱う場合は、ファイル一覧から対象の図面を選択します。
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="step">
+                        <div class="step-number">2</div>
+                        <div>
+                            <h3>確認するページを表示する</h3>
+                            <p>
+                                複数ページPDFの場合は、検図するページへ切り替えて内容を確認します。
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="step">
+                        <div class="step-number">3</div>
+                        <div>
+                            <h3>チェックやコメントを追加する</h3>
+                            <p>
+                                チェックマーク、テキストコメント、フリーハンド線などを使い、
+                                確認済み箇所や指摘内容を図面上に記入します。
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="step">
+                        <div class="step-number">4</div>
+                        <div>
+                            <h3>必要なページの検図を続ける</h3>
+                            <p>
+                                ページを切り替えながら、同様に検図内容を追加していきます。
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="step">
+                        <div class="step-number">5</div>
+                        <div>
+                            <h3>検図済みPDFを保存する</h3>
+                            <p>
+                                保存操作を行うと、検図内容を反映したPDFを出力します。
+                            </p>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="note">
+                    <strong>保存ファイルについて</strong>
+                    初回保存時は、元のPDFと同じフォルダに、元のファイル名へ
+                    <code>_checked</code> を付けた別ファイルとして保存します。
+                    たとえば <code>drawing.pdf</code> は <code>drawing_checked.pdf</code> となるため、
+                    元のPDFはそのまま残ります。
+                    すでにファイル名が <code>_checked</code> で終わっているPDFを保存する場合は、
+                    同名ファイルが更新される場合があります。
+                </div>
+            </div>
+        </section>
+
+        <section id="install" class="section section-white">
+            <div class="container">
+                <div class="section-heading">
+                    <h2>インストール方法</h2>
+                    <p>
+                        BASEで購入後、ダウンロードしたファイルからインストールできます。
+                    </p>
+                </div>
+
+                <div class="steps">
+                    <article class="step">
+                        <div class="step-number">1</div>
+                        <div>
+                            <h3>購入ファイルをダウンロード</h3>
+                            <p>
+                                BASEの購入画面からDracherの配布ZIPファイルをダウンロードします。
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="step">
+                        <div class="step-number">2</div>
+                        <div>
+                            <h3>ZIPファイルを展開</h3>
+                            <p>
+                                ダウンロードしたZIPファイルを右クリックし、「すべて展開」などで展開します。
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="step">
+                        <div class="step-number">3</div>
+                        <div>
+                            <h3>セットアップファイルを実行</h3>
+                            <p>
+                                展開したフォルダ内のDracherセットアップファイルを実行し、
+                                画面の案内に沿ってインストールします。
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="step">
+                        <div class="step-number">4</div>
+                        <div>
+                            <h3>Dracherを起動</h3>
+                            <p>
+                                インストール完了後、作成されたショートカットまたはスタートメニューからDracherを起動します。
+                            </p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="section-heading">
+                    <h2>動作環境・注意事項</h2>
+                    <p>
+                        購入前に、使用するPCが対応環境であることをご確認ください。
+                    </p>
+                </div>
+
+                <div class="info-grid">
+                    <article class="info-card">
+                        <h3>動作環境</h3>
+                        <ul>
+                            <li>OS：Windows 10 / Windows 11</li>
+                            <li>64-bit Windows PC</li>
+                            <li>PDF形式の図面ファイル</li>
+                        </ul>
+                    </article>
+
+                    <article class="info-card">
+                        <h3>ご利用前の注意</h3>
+                        <ul>
+                            <li>重要な図面は、念のため別途バックアップを保管してください。</li>
+                            <li>PDFの内容や作成方法によっては、表示結果が異なる場合があります。</li>
+                            <li>本アプリはPDF図面の検図作業を支援するツールです。設計内容そのものの正確性を保証するものではありません。</li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="section section-white">
+            <div class="container">
+                <div class="section-heading">
+                    <h2>よくある質問</h2>
+                </div>
+
+                <div class="faq-list">
+                    <details>
+                        <summary>元のPDFは上書きされますか？</summary>
+                        <p>
+                            初回保存時は、元のファイル名に <code>_checked</code> を付けた別PDFとして保存するため、
+                            元のPDFは残ります。すでに <code>_checked</code> が付いたファイルを再保存する場合は、
+                            同名ファイルが更新される場合があります。
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary>複数ページのPDFを使用できますか？</summary>
+                        <p>
+                            はい。複数ページPDFに対応しており、ページを切り替えながら検図できます。
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary>どのような注釈を追加できますか？</summary>
+                        <p>
+                            チェックマーク、テキストコメント、フリーハンド線などを図面上に追加できます。
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary>アンインストールするにはどうすればよいですか？</summary>
+                        <p>
+                            Windowsの「設定」から「アプリ」を開き、インストール済みアプリの一覧からDracherを選択してアンインストールできます。
+                        </p>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="purchase-box">
+                    <h2>Dracherを購入する</h2>
+                    <p>
+                        DracherはテクパラのBASEショップから購入できます。
+                        購入前に、このページの動作環境と注意事項をご確認ください。
+                    </p>
+
+                    <!-- 商品公開後、このURLをDracherの商品ページURLへ差し替えてください。 -->
+                    <a
+                        href="https://techpara.theshop.jp/"
+                        class="button button-primary"
+                        target="_blank"
+                        rel="noopener noreferrer">
+                        BASEショップで購入する
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-brand">
+                    <strong>テクパラ</strong>
+                    <p>
+                        電子・機械・ソフトウェアなど、
+                        技術開発や試作を支援する製品・ツールを提供します。
+                    </p>
+                </div>
+
+                <ul class="footer-links">
+                    <li><a href="/">トップページ</a></li>
+                    <li>
+                        <a href="https://techpara.theshop.jp/" target="_blank" rel="noopener noreferrer">
+                            BASEショップ
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <p class="copyright">
+                <small>&copy; 2026 Techpara. All rights reserved.</small>
+            </p>
+        </div>
+    </footer>
+
+</body>
+
+</html>
